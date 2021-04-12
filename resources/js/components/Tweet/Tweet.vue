@@ -2,9 +2,11 @@
   <!-- Media Container -->
   <div class="mb-4">
     <router-link class="cursor-pointer" :to="{name: 'tweet', params: {id: story.id}}">
-      <img class="w-auto h-auto rounded-lg" v-bind:src="story.image" alt="" />
+      <img class="w-full object-fit max-h-64 h-auto rounded-lg" v-bind:src="story.image" alt="" />
+      
     </router-link>
     <tweet-footer :story="story"> </tweet-footer>
+    
   </div>
 </template>
 

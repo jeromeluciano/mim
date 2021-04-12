@@ -11,13 +11,14 @@
         </div>
 
         <div class="lg:mx-4 text-gray-500">
-          MiM
+          <h3 class="hidden lg:block">mim</h3>
+          <navigation-button class="lg:hidden"> </navigation-button>
         </div>
 
         <div class="mr-4 lg:flex lg:items-center">
           <!-- Desktop  -->
           <div class="lg:flex lg:flex-row">
-            <navigation-button> </navigation-button>
+            <navigation-button class="hidden"> </navigation-button>
 
             <search-desktop> </search-desktop>
 

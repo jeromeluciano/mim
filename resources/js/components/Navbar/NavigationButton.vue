@@ -1,5 +1,5 @@
 <template>
-  <div class="hidden lg:flex lg:items-center mr-3 space-x-3">
+  <div class="lg:flex lg:items-center mr-3 space-x-3">
     <!-- home -->
     <button class="focus:outline-none" @click="gotoHome">
       <svg

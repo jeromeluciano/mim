@@ -1,9 +1,10 @@
 <template>
   <div class="mx-auto w-full lg:w-7/12">
-    <div>
-      <img class="w-full  rounded-lg" :src="story.image" alt="">
+  <tweet-footer :story="story"> </tweet-footer>
+    <div class="rounded-lg">
+      <img class="mt-2 w-full object-fit max-h-96 rounded-lg" :src="story.image" alt="">
     </div>
-    <tweet-footer :story="story"> </tweet-footer>
+    
   </div>
 </template>
 

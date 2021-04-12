@@ -1,0 +1,31 @@
+- User
+  : id
+  : avatar_url - nullable or default
+  : name
+  : email
+  : password
+
+- Tweet
+  : id
+  : user_id (fk)
+  : caption (nullable)
+  : media_streamable_url - (nullable) - for http live streaming (hls)
+  : media_url - for image or gif path
+  : created_at
+
+- Comment ( table) 
+  : id
+  : user_id - cascade on delete
+  : tweet_id - cascade on delete
+  : message
+
+- follow_user
+  : user_id - the one you follow
+  : follower_id - you as a follower
+
+
+
+
+
+Determining if user like posts possible solution: You may use your suggested approach, but instead of retreiving all liked posts, 
+you may add whereIn clause to select only those which are in $posts collection. And then again walk through the $posts collection to determine, whether it is in $likes collection. I think that will be fast enough.

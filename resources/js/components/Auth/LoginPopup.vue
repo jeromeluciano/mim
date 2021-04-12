@@ -22,10 +22,10 @@
             </span>
           </p>
           <!-- form -->
-          <input class="w-full border border-gray-300 p-2 rounded" type="text" placeholder="Email address">
-          <input class="w-full border border-gray-300 p-2 rounded" type="password" placeholder="Password">
+          <input v-model="form.email" class="focus:outline-none focus:ring-2 w-full border border-gray-300 p-2 rounded" type="text" placeholder="Email address">
+          <input v-model="form.password" class="focus:outline-none focus:ring-2 w-full border border-gray-300 p-2 rounded" type="password" placeholder="Password">
           <a class="block text-gray-500 text-xs mt-4 text-right" href="">Forgot password?</a>
-          <button class="focus:outline-none w-full bg-pink-600 text-white py-2 rounded">Sign in</button>
+          <button @click="loginAttempt" class="focus:outline-none w-full bg-pink-600 text-white py-2 rounded">Sign in</button>
           <button @click="gotoRegister" class="focus:outline-none block w-full text-center text-gray-500 mt-4" href="">Create account</button>
         </div>
       </div>
@@ -37,6 +37,14 @@
 import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'LoginPopup',
+  data () {
+    return {
+      form: {
+        email: '',
+        password: ''
+      }
+    }
+  },
   computed: {
     ...mapGetters({
       isLoginModalOpen: 'auth/isLoginModalOpen'
@@ -44,7 +52,8 @@ export default {
   },
   methods: {
     ...mapActions({
-      toggleLoginModal: 'auth/toggleLoginModal'
+      toggleLoginModal: 'auth/toggleLoginModal',
+      signIn: 'auth/signIn'
     }),
     toggleModal () {
       this.toggleLoginModal();
@@ -52,6 +61,10 @@ export default {
     gotoRegister () {
       this.$router.push({name: 'register'})
       this.toggleModal()
+    },
+    async loginAttempt () {
+      await this.signIn(this.form);
+      this.toggleModal();
     }
   }
 }

@@ -38,6 +38,7 @@
         <p>Settings</p>
       </button>
       <button
+        @click="logout"
         class="focus:outline-none flex flex-row mr-4 items-center text-sm text-gray-500 w-full"
       >
         <svg
@@ -59,7 +60,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 export default {
   name: "ProfileMenu",
   data() {
@@ -73,11 +74,17 @@ export default {
     })
   },
   methods: {
+    ...mapActions({
+      signOut: 'auth/signOut'
+    }),
     toggleProfileMenu() {
       this.isProfileMenuOpen = !this.isProfileMenuOpen;
     },
     closeProfileMenuModal () {
       this.isProfileMenuOpen = false
+    },
+    async logout () {
+      await this.signOut()
     }
   },
 };
