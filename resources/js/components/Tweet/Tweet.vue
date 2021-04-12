@@ -1,8 +1,9 @@
 <template>
   <!-- Media Container -->
   <div class="mb-4">
-    <img class="w-auto h-auto rounded-lg" v-bind:src="story.image" alt="" />
-
+    <router-link class="cursor-pointer" to="`/tweet/${story.id}`">
+      <img class="w-auto h-auto rounded-lg" v-bind:src="story.image" alt="" />
+    </router-link>
     <div class="flex flex-row justify-between mt-2 w-auto">
       <!-- Author Avatar & Name -->
       <tweet-avatar :story="story"> </tweet-avatar>

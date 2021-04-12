@@ -3,7 +3,7 @@
     <button 
       v-if="authenticated" 
       @click="gotoCreate"
-      class="py-2 focus:outline-none focus:ring-2 ring-white hidden lg:block text-sm font-semibold bg-pink-500 text-white rounded-md px-4 py-1"
+      class="focus:outline-none focus:ring-2 ring-white hidden lg:block text-sm font-semibold bg-pink-500 text-white rounded-md px-4 py-1"
     >
       Upload
     </button>

@@ -15,6 +15,12 @@
             </svg>
             <p>Trendings</p>
           </div>
+          <div v-if="!authenticated" @click="toggleLoginModal" class="cursor-pointer text-sm flex items-center bg-secondary mx-4 my-4 px-4 py-4 rounded-md text-gray-200 font-semibold" href="#">
+            <svg xmlns="http://www.w3.org/2000/svg" class="text-gray-400 mr-3 h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M3 3a1 1 0 011 1v12a1 1 0 11-2 0V4a1 1 0 011-1zm7.707 3.293a1 1 0 010 1.414L9.414 9H17a1 1 0 110 2H9.414l1.293 1.293a1 1 0 01-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0z" clip-rule="evenodd" />
+            </svg>
+            <p>Sign in</p>
+          </div>
       </div>
       </div>
 </template>
@@ -29,11 +35,14 @@ export default {
   computed: {
     ...mapGetters({
       isBurgerOpen: 'navbar/isBurgerOpen',
+      isLoginModalOpen: 'auth/isLoginModalOpen',
+      authenticated: 'auth/authenticated'
     })
   },
   methods: {
     ...mapActions({
       toggleBurger: 'navbar/toggleBurger',
+      toggleLoginModal: 'auth/toggleLoginModal'
     }),
     gotoTrendings () {
       if(this.$router.name == 'trendings') return;
@@ -42,7 +51,7 @@ export default {
     gotoHome () {
       if(this.$router.name == 'home') return;
       this.$router.push({name: 'home'})
-    }
+    },
   }
 }
 </script>

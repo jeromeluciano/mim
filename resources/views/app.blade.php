@@ -5,33 +5,19 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <title>Laravel</title>
-
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+        
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
 
         <!-- Styles -->
-        <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+        <link rel="stylesheet" href="{{ mix('css/app.css')."?v={now()}" }}">
 
     </head>
-    <body class="antialiased bg-gray-800">
+    <body class="bg-primary">
         
-        <div id="app">
-            {{-- <header>
-                <navbar></navbar>
-              </header>
-          
-              <main class="bg-primary h-auto">
-                <dropdown-navbar> </dropdown-navbar>
-                <div class="mx-4 my-2">
-                  <router-view/>
-                </div>
-                
-                <login-popup> </login-popup>
-                
-              </main> --}}
+        <div id="app" class="">
           
         </div>
 
-        <script src="{{ mix('js/app.js') }}" def></script>
+        <script src="{{ mix('js/app.js') }}" defer></script>
     </body>
 </html>
