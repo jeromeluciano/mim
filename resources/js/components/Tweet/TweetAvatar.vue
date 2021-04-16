@@ -5,7 +5,7 @@
       v-bind:src="story.author_avatar"
       alt=""
     />
-    <p class="text-gray-300 text-xs font-semibold">{{ story.author }}</p>
+    <p class="text-gray-300 text-xs font-semibold">{{ story.user.name }}</p>
   </div>
 </template>
 

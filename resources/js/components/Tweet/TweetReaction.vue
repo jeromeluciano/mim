@@ -2,6 +2,7 @@
   <!-- Heart Emoji -->
   <div class="flex flex-row items-center mr-3">
     <button
+      @click="toggleLike(story)"
       class="focus:outline-none"
       :class="{ 'animate-pulse': story.liked }"
     >
@@ -19,19 +20,25 @@
         />
       </svg>
     </button>
-    <span class="text-gray-400 text-xs"> {{ likeCount }} </span>
+    <span class="text-gray-400 text-xs"> {{ likesCount }} </span>
   </div>
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 const abbr = require('number-abbreviate')
 export default {
   name: 'TweetReaction',
   props: ['story'],
   computed: {
-    likeCount: function () {
-      return abbr(this.story.likeCount, 2)
+    likesCount: function () {
+      return abbr(this.story.likesCount, 2)
     }
+  },
+  methods: {
+    ...mapActions({
+      toggleLike: 'auth/toggleLike'
+    })
   }
 };
 </script>

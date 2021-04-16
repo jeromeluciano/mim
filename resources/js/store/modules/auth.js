@@ -1,15 +1,11 @@
 import getters from './auth/getters'
 import mutations from './auth/mutations'
 import actions from './auth/actions'
+import state from './auth/state'
 
-export  default {
+export default {
   namespaced: true,
-  state: {
-    authenticated: false,
-    user: null,
-    isLoginModalOpen: false,
-    stories: []
-  },
+  state,
   getters,
   mutations,
   actions

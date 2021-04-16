@@ -9,6 +9,7 @@
   : id
   : user_id (fk)
   : caption (nullable)
+  : media_disks (nullable)
   : media_streamable_url - (nullable) - for http live streaming (hls)
   : media_url - for image or gif path
   : created_at

@@ -24,7 +24,7 @@
           clip-rule="evenodd"
         />
       </svg>
-      <img class="w-auto h-auto" v-else v-bind:src="media" alt="" />
+      <img class="w-auto h-auto" v-else v-bind:src="attachment" alt="" />
     </div>
   
     <div class="w-full">
@@ -42,24 +42,35 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   name: "UploadForm",
   data() {
     return {
-      media: "",
+      attachment: null,
+      media: null
     };
   },
   methods: {
     openFile() {
       this.$refs["attachment"].click();
     },
-    previewImage() {
-      let image = document.querySelector("#attachment").files[0];
+    previewImage(e) {
+      let media = document.querySelector("#attachment").files[0];
       let reader = new FileReader();
-      reader.readAsDataURL(image);
+      reader.readAsDataURL(media);
       reader.onload = (e) => {
-        this.media = e.target.result;
+        this.attachment = e.target.result;
       };
+      let formData = new FormData();
+      formData.set('attachment', media);
+
+      axios.post('/api/tweet', formData, {
+        headers: {
+          'content-type': 'multipart/form-data'
+        }
+      })
+
     },
   },
 };
