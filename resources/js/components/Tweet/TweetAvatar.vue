@@ -2,7 +2,7 @@
   <div class="flex flex-row items-center">
     <img
       class="rounded-full mr-2 w-6 h-6"
-      v-bind:src="story.author_avatar"
+      v-bind:src="story.user.avatar_url"
       alt=""
     />
     <p class="text-gray-300 text-xs font-semibold">{{ story.user.name }}</p>

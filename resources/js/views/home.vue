@@ -23,8 +23,5 @@ export default {
       fetchTweets: 'auth/fetchTweets'
     })
   },
-  async created () {
-    this.fetchTweets();
-  },
 }
 </script>

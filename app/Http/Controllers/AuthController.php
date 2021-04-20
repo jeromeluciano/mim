@@ -3,8 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AuthRequest;
+use App\Http\Requests\AvatarRequest;
+use App\Jobs\AvatarUpload;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
@@ -30,6 +36,55 @@ class AuthController extends Controller
         $request->session()->regenerateToken();
 
         return response()->json(null, 200);
+    }
+
+    public function tweets(User $user)
+    {
+        $tweets = $user->tweets()->with('user')->get();
+        return response()->json(compact('tweets'), 200);
+    }
+
+    public function user(Request $request, User $user)
+    {
+        return response()->json($user, 200);
+    }
+
+    public function avatar(AvatarRequest $request)
+    {
+        $data = $request->only('avatar');
+        $file = $request->file('avatar');
+        $mimeType = $file->getMimeType();
+        $userId = auth()->guard('web')->user()->id;
+        $path = $file->store('avatars');
+        
+        $generatedFileName = Str::uuid().'.'.$file->getClientOriginalExtension();
+        Image::make($file->getRealPath())->resize(300, 300, function($constraint) {
+            $constraint->aspectRatio();
+            $constraint->upsize();
+        })->save(public_path($generatedFileName));
+
+        $avatar = [
+            'user_id' => $userId,
+            'mime_type' => $mimeType,
+            'extension' => $file->getClientOriginalExtension(),
+        ];
+
+        $targetPath = 'avatars/'.$avatar['user_id'].'/'.now().'.'.$avatar['extension'];
+       
+        // $targetPath = 'avatars/'.$avatar['user_id'].'/'.now().'.'.$avatar['extension'];
+        $tempFile = Storage::disk('public')->get($generatedFileName);
+        $s3 = Storage::disk('spaces');
+        $s3->put($targetPath, $tempFile);
+        $url = $s3->url($targetPath);
+        $user = User::find($avatar['user_id']);
+
+        $user->update([
+            'avatar_url' => $url
+        ]);
+
+        // dispatch(new AvatarUpload($avatar, $path));
+
+        return response()->json(['status' => 200, 'avatar_url' => $url],200);
     }
 
 }

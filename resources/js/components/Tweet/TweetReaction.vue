@@ -2,7 +2,7 @@
   <!-- Heart Emoji -->
   <div class="flex flex-row items-center mr-3">
     <button
-      @click="toggleLike(story)"
+      @click="toggleLike"
       class="focus:outline-none"
       :class="{ 'animate-pulse': story.liked }"
     >
@@ -37,8 +37,18 @@ export default {
   },
   methods: {
     ...mapActions({
-      toggleLike: 'auth/toggleLike'
-    })
+      toggleStoryLike: 'auth/toggleStoryLike',
+      toggleTrendingLike: 'auth/toggleTrendingLike'
+    }),
+
+    async toggleLike () {
+      console.log(this.$route)
+      if (this.$route.name == 'trendings') {
+        return this.toggleTrendingLike(this.story);
+      }
+      return this.toggleStoryLike(this.story);
+    }
+    
   }
 };
 </script>

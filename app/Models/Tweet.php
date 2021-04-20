@@ -25,7 +25,7 @@ class Tweet extends Model
 
     public function like($id = null)
     {
-        $this->likes()->create([
+        return $this->likes()->create([
             'user_id' => $id ? $id : auth('web')->id(),
         ]);
     }
@@ -33,7 +33,7 @@ class Tweet extends Model
     public function dislike($id = null)
     {
         $userId = $id ? $id : auth('web')->id(); 
-        $this->likes()->where('user_id', $userId)->delete();
+        return $this->likes()->where('user_id', $userId)->delete();
     }
     public function isLikedBy($id = null)
     {
@@ -51,6 +51,12 @@ class Tweet extends Model
         return $this->like($id);
     }
 
+    // static function
+    public static function trendings()
+    {
+        return Tweet::with('user')->paginate(6)->sortByDesc('likesCount');
+    }
+
     // computed attributes
     public function getLikesCountAttribute()
     {
@@ -61,4 +67,5 @@ class Tweet extends Model
     {
         return $this->isLikedBy();
     }
+
 }

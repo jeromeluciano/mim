@@ -16,11 +16,12 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
+    // protected $fillable = [
+    //     'name',
+    //     'email',
+    //     'password',
+    // ];
+    protected $guarded = [];
 
 
     /**
@@ -36,6 +37,8 @@ class User extends Authenticatable
         'email_verified_at'
     ];
 
+    protected $appends = ['tweetsId'];
+
     /**
      * The attributes that should be cast to native types.
      *
@@ -48,5 +51,10 @@ class User extends Authenticatable
     public function tweets()
     {
         return $this->hasMany(Tweet::class);
+    }
+
+    public function getTweetsIdAttribute()
+    {
+        return $this->tweets;
     }
 }

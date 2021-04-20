@@ -24,5 +24,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::middleware(['auth:sanctum'])->group(function() {
     Route::post('/tweet', 'TweetController@create');
     Route::get('/tweets', 'TweetController@index');
+    Route::post('/tweets/{tweet}/like', 'TweetController@like');
+    Route::post('/user/avatar', 'AuthController@avatar');
+    Route::post('/tweet-video', 'TweetController@videoTweet');
 });
-
+Route::get('/user/{user}', 'AuthController@user');
+Route::get('/user/{user}/tweets', 'AuthController@tweets');
+Route::get('/tweets/trendings', 'TweetController@trendings');

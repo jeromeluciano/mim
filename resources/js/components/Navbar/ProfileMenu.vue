@@ -6,7 +6,7 @@
       <button @click="toggleProfileMenu" class="focus:outline-none focus:ring-2 rounded-full">
         <img
           class="cursor-pointer h-8 w-8 rounded-full"
-          src="../../assets/images/denki.jpg"
+          v-bind:src="user.avatar_url"
           alt=""
         />
       </button>
@@ -16,11 +16,11 @@
     <div v-if="isProfileMenuOpen" @blur="closeProfileMenuModal" @mouseleave="toggleProfileMenu" class="hidden lg:block space-y-3 space-x-2 absolute rounded-md px-2 py-4 bg-white w-40 h-auto right-1/4">
       <button class="focus:outline-none flex flex-row justify-center items-center text-sm text-gray-500 w-full">
         <div class="m-0 p-0">
-          <img class="cursor-pointer h-6 w-6 rounded-full mr-4" src="../../assets/images/denki.jpg" alt=""/>
+          <img class="cursor-pointer h-6 w-6 rounded-full mr-4" :src="user.avatar_url" alt=""/>
         </div>
-        <p>Denki Kaminari</p>
+        <p @click="gotoProfile">Denki Kaminari</p>
       </button>
-      <button
+      <!-- <button
         class="focus:outline-none flex flex-row items-center text-sm text-gray-500 w-full"
       >
         <svg
@@ -36,7 +36,7 @@
           />
         </svg>
         <p>Settings</p>
-      </button>
+      </button> -->
       <button
         @click="logout"
         class="focus:outline-none flex flex-row mr-4 items-center text-sm text-gray-500 w-full"
@@ -70,7 +70,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      authenticated: 'auth/authenticated'
+      authenticated: 'auth/authenticated',
+      user: 'auth/user'
     })
   },
   methods: {
@@ -85,6 +86,9 @@ export default {
     },
     async logout () {
       await this.signOut()
+    },
+    gotoProfile () {
+      this.$router.push({ name: 'profile', params: {id: this.user.id}})
     }
   },
 };

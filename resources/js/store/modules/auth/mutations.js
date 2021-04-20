@@ -2,10 +2,11 @@ export default {
   SET_STORIES (state, value) {
     state.stories = value
   },
-  TOGGLE_LIKE (state, target) {
-    state.stories.map(story => {
-      if (story.id == target.id) story.liked = !story.liked
-    });
+  SET_TRENDINGS (state, value) {
+    state.trendings = value
+  },
+  APPEND_USER_TWEETS (state, value) {
+    state.tweets = [...state.tweets, value];
   },
   SET_USER (state, value) {
     state.user = value;

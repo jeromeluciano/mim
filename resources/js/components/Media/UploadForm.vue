@@ -24,15 +24,13 @@
           clip-rule="evenodd"
         />
       </svg>
-      <img class="w-auto h-auto" v-else v-bind:src="attachment" alt="" />
-    </div>
-  
-    <div class="w-full">
-      <input id="caption" class="focus:outline-none bg-gray-200 text-black w-full py-2 px-2 rounded" placeholder="Caption" type="text">
+      <video controls v-if="mimeType.startsWith('video')" v-bind:src="attachment"></video>
+      <img v-else-if="mimeType.startsWith('image')" class="w-auto h-auto" v-bind:src="attachment" alt="" />
     </div>
 
     <div class="flex justify-center items-center relative mt-2">
       <button
+        @click.prevent="uploadToCloud"
         class="absolute left-0 top-1 focus:ring-2 focus:outline-none hover:opacity-90 bg-pink-600 text-white px-4 py-2 rounded-md"
       >
         Create
@@ -43,12 +41,17 @@
 
 <script>
 import axios from 'axios'
+import { DataExchange } from 'aws-sdk';
+const { v4: uuidv4 } = require('uuid');
 export default {
   name: "UploadForm",
   data() {
     return {
       attachment: null,
-      media: null
+      media: null,
+      mimeType: '',
+      s3: null,
+      binaryString: null,
     };
   },
   methods: {
@@ -57,22 +60,101 @@ export default {
     },
     previewImage(e) {
       let media = document.querySelector("#attachment").files[0];
+      if (media == undefined) return;
+      this.mimeType = media.type
+      window.mimeType = media.type
+      this.media = media;
       let reader = new FileReader();
-      reader.readAsDataURL(media);
-      reader.onload = (e) => {
-        this.attachment = e.target.result;
-      };
-      let formData = new FormData();
-      formData.set('attachment', media);
-
-      axios.post('/api/tweet', formData, {
-        headers: {
-          'content-type': 'multipart/form-data'
+      if (this.mimeType.startsWith('image')) {
+        reader.readAsDataURL(media);
+        reader.onload = (e) => {
+          this.attachment = e.target.result;
+        };    
+      }
+      else if (this.mimeType.startsWith('video')) {
+        let blobURL = URL.createObjectURL(media)
+        reader.readAsArrayBuffer(media)
+        reader.onload = (e) => {
+          this.binaryString = e.target.result
         }
+      
+        // console.log(blobURL)
+        this.attachment = blobURL
+      }
+    },
+    async uploadToCloud () {
+
+      if (this.attachment == null || this.mimeType == '' || this.media == null) {
+        console.log ('invalid input')
+        return
+      }
+      const extension = this.media.type.split('/')[1]
+      if (this.mimeType.startsWith('image')) {
+        let formData = new FormData();
+        formData.set('attachment', this.media);
+
+        axios.post('/api/tweet', formData, {
+          headers: {
+            'content-type': 'multipart/form-data'
+          }
+        }).then( () => {
+          // show notification
+          this.resetData();
+        })
+      }
+      else if (this.mimeType.startsWith('video')) {
+        const data = {
+          binaryString: this.binaryString,
+          extension: extension,
+          mediaType: this.media.type
+        }
+        await this.s3VideoUpload(data)
+      }
+    },
+
+    async s3VideoUpload (data) {
+      const AWS = require('aws-sdk')
+
+      const spacesEndPoint = new AWS.Endpoint(process.env.MIX_DO_SPACES_ENDPOINT)
+      const s3 = new AWS.S3({
+        endpoint: spacesEndPoint,
+        accessKeyId: process.env.MIX_DO_SPACES_KEY,
+        secretAccessKey: process.env.MIX_DO_SPACES_SECRET
       })
 
+      const params = {
+        Bucket: 'mimspace/videos',
+        Key: `${uuidv4()}.${data.extension}`,
+        Body: data.binaryString,
+        ACL: 'public-read-write',
+        ContentType: data.mediaType,
+      }
+      
+      let { Location } = await s3.upload(params).promise()
+        .then(data => data)
+
+      if (Location == undefined) return
+      const metadata = {
+        mimeType: data.mediaType,
+        url: Location,
+      }
+      await this.createVideoTweet(metadata)
     },
-  },
+
+    async createVideoTweet (data) {
+      const formData = new FormData()
+      formData.append('mime_type', data.mimeType)
+      formData.append('media_streamable_url', data.url)
+      console.log(this.mimeType, data.location)
+      axios.post('/api/tweet-video', formData)
+              .then(response => console.log(response.data))
+    },
+    resetData () {
+      this.attachment = null
+      this.media = null
+      this.mimeType = ''
+    }
+  }
 };
 </script>
 

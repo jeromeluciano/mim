@@ -13,10 +13,6 @@ export default {
   components: {
     Tweet
   },
-  computed: {
-    ...mapGetters({
-      stories: 'auth/stories'
-    })
-  }
+  props: ['stories']
 }
 </script>

@@ -1,3 +1,9 @@
+Tasks for tomorrow:
+  registration 
+  notification pop up
+  
+
+
 - User
   : id
   : avatar_url - nullable or default

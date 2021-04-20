@@ -3,6 +3,7 @@ import trendings from '../views/trendings'
 import create from '../views/create'
 import register from '../views/register'
 import tweet from '../views/tweet'
+import profile from '../views/profile'
 
 const routes = [
   {
@@ -29,6 +30,11 @@ const routes = [
     path: '/tweet/:id',
     name: 'tweet',
     component: tweet
+  },
+  {
+    path: '/profile/:id',
+    name: 'profile',
+    component: profile
   }
 ]
 export default routes;
