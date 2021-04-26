@@ -17,11 +17,11 @@ use Illuminate\Support\Facades\Route;
 Route::post('/login', 'AuthController@login');
 Route::delete('/logout', 'AuthController@logout');
 
-Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::middleware(['auth:sanctum'])->group(function() {
+Route::middleware('auth:sanctum')->group(function() {
     Route::post('/tweet', 'TweetController@create');
     Route::post('/tweets/{tweet}/like', 'TweetController@like');
     Route::post('/user/avatar', 'AuthController@avatar');
