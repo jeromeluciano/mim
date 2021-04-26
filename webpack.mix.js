@@ -16,5 +16,5 @@ mix.js('resources/js/app.js', 'public/js')
     .postCss("resources/css/app.css", "public/css", [
         require("tailwindcss"),
     ])
-    .browserSync('memerist-v1.test')
+    // .browserSync('memerist-v1.test')
     .version()
