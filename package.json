@@ -33,6 +33,7 @@
         "aws-sdk": "^2.888.0",
         "dotenv": "^8.2.0",
         "number-abbreviate": "^2.0.0",
+        "path-browserify": "^1.0.1",
         "uuid": "^8.3.2",
         "video-js": "^0.7.0",
         "vue-router": "^3.5.1",
