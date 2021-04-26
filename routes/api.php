@@ -29,7 +29,7 @@ Route::middleware('auth:sanctum')->group(function() {
     Route::patch('/tweet/{tweet}/views', 'TweetController@incrementViews');
     Route::delete('/tweet/{tweet}', 'TweetController@destroy');
 });
-
+Route::get('/tweet/{tweet}', 'TweetController@getTweet');
 Route::post('/user/search', 'UserController@searchUser');
 Route::post('/user/register', 'AuthController@register');
 Route::get('/tweets', 'TweetController@index');

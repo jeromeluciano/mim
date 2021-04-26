@@ -52,12 +52,9 @@ class TweetController extends Controller
     public function index()
     {
         $tweets = Tweet::with('user')->get()->reverse()->values();
-        return response()->json(compact('tweets'), 200);
+        return response()->json($tweets, 200);
     }
 
-    // public function getTweet(Request $request, Tweet $tweet) {
-    //     return response()->json(compact('tweet'), 200);
-    // }
 
     public function like(Request $request, Tweet $tweet)
     {
@@ -70,9 +67,13 @@ class TweetController extends Controller
         return response(200);
     }
 
-
     public function trendings()
     {
         return Tweet::trendings()->all();
+    }
+
+    public function getTweet(Tweet $tweet)
+    {
+        return response()->json($tweet, 200);
     }
 }

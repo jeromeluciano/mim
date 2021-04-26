@@ -45,7 +45,7 @@ class User extends Authenticatable
         'email_verified_at'
     ];
 
-    protected $appends = ['tweetsId'];
+    // protected $appends = ['tweetsId'];
 
     /**
      * The attributes that should be cast to native types.
@@ -63,6 +63,6 @@ class User extends Authenticatable
 
     public function getTweetsIdAttribute()
     {
-        return $this->tweets;
+        return $this->tweets->pluck('id');
     }
 }

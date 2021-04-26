@@ -11,7 +11,7 @@ class Tweet extends Model
 
     protected $guarded = [];
     protected $with = ['user'];
-    protected $appends = ['likesCount', 'liked'];
+    protected $appends = ['likesCount', 'liked', 'datePosted'];
 
     public function user()
     {
@@ -66,6 +66,11 @@ class Tweet extends Model
     public function getLikedAttribute()
     {
         return $this->isLikedBy();
+    }
+
+    public function getDatePostedAttribute()
+    {
+        return $this->created_at->diffForHumans();
     }
 
 }

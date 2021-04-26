@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="space-y-2 mt-3">
     <tweet-comment> </tweet-comment>
   </div>
 </template>

@@ -13,12 +13,12 @@
     </div>
 
     <!-- Profile Menu Modal -->
-    <div v-if="isProfileMenuOpen" @blur="closeProfileMenuModal" @mouseleave="toggleProfileMenu" class="hidden lg:block space-y-3 space-x-2 absolute rounded-md px-2 py-4 bg-white w-40 h-auto right-1/4">
+    <div v-if="isProfileMenuOpen" @blur="closeProfileMenuModal" @mouseleave="toggleProfileMenu" class="hidden lg:block space-y-3 space-x-2 absolute rounded-md px-2 py-4 bg-white w-48 h-auto right-1/4">
       <button class="focus:outline-none flex flex-row justify-center items-center text-sm text-gray-500 w-full">
         <div class="m-0 p-0">
           <img class="cursor-pointer h-6 w-6 rounded-full mr-4" :src="user.avatar_url == null ? 'https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg' : user.avatar_url" alt=""/>
         </div>
-        <p @click="gotoProfile">Denki Kaminari</p>
+        <p class="w-full text-xs font-semibold" @click="gotoProfile">{{ user.name }}</p>
       </button>
       <!-- <button
         class="focus:outline-none flex flex-row items-center text-sm text-gray-500 w-full"
@@ -53,7 +53,7 @@
             clip-rule="evenodd"
           />
         </svg>
-        <p>Sign out</p>
+        <p class="font-semibold text-xs">Sign out</p>
       </button>
     </div>
   </div>

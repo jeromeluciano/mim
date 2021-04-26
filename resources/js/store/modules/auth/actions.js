@@ -22,7 +22,7 @@ export default {
   async fetchTweets({ commit }) {
     let response = await axios.get('/api/tweets');
     console.log(response.data.tweets)
-    commit('SET_STORIES', response.data.tweets)
+    commit('SET_STORIES', response.data)
   },
   
   async fetchTrendings({ commit }) {
