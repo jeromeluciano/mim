@@ -1,6 +1,6 @@
 <template>
   <!-- Heart Emoji -->
-  <div class="flex flex-row items-center mr-3">
+  <div class="flex flex-row items-center mr-4">
     <button
       @click="toggleLike"
       class="focus:outline-none"

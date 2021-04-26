@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div :key="this.$route.path">
       <div class="flex flex-row justify-center itemsc-center py-4 space-x-8">
         <div>
-          <img class="rounded-full w-32 h-32 object-fit" v-bind:src="userProfile.avatar_url">
+          <img  class="rounded-full w-32 h-32 object-fit" v-bind:src="userProfile.avatar_url == null ? 'https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg' : userProfile.avatar_url">
         </div>
         <div class="flex flex-col mt-2">
           <h1 class="text-2xl lg:text-3xl font-bold text-white">{{ userProfile.name }}</h1>
@@ -51,12 +51,12 @@ export default {
   },
   async created () {
     const userId = this.$route.params.id
+    
     let response = await axios.get(`/api/user/${userId}`)
     this.userProfile = response.data
     console.log('user: '+this.userProfile)
     this.fetchUserTweets(userId)
-
-  }
+  },
 }
 </script>
 

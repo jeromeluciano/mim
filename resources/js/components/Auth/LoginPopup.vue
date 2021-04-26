@@ -47,7 +47,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      isLoginModalOpen: 'auth/isLoginModalOpen'
+      isLoginModalOpen: 'auth/isLoginModalOpen',
+      authenticated: 'auth/authenticated'
     })
   },
   methods: {
@@ -63,7 +64,10 @@ export default {
       this.toggleModal()
     },
     async loginAttempt () {
-      await this.signIn(this.form);
+      await this.signIn(this.form)
+      
+      if (this.authenticated) this.$toastr.s('Login Successful', 'Message')
+      else this.$toastr.e('Login Failed', 'Message')
       this.toggleModal();
     }
   }

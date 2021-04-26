@@ -3,9 +3,10 @@
     <!-- Author Avatar & Name -->
     <tweet-avatar :story="story"> </tweet-avatar>
     <!-- Tweet Information: Heart Emoji & Views counter -->
-    <div class="flex flex-row">
+    <div class="relative flex flex-row items-center">
       <tweet-reaction :story="story"> </tweet-reaction>
       <tweet-view-count :story="story"> </tweet-view-count>
+      <tweet-menu-button :story="story"> </tweet-menu-button>
     </div>
   </div>
 </template>

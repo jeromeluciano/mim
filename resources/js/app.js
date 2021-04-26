@@ -4,6 +4,9 @@ import router from './router/index'
 import App from './App.vue'
 import store from './store/index'
 import axios from 'axios'
+import VueToastr from 'vue-toastr'
+
+Vue.use(VueToastr)
 
 axios.defaults.withCredentials = true
 axios.defaults.baseURL = 'http://localhost:3000/'

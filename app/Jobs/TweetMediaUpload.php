@@ -43,7 +43,8 @@ class TweetMediaUpload implements ShouldQueue
         $url = $s3->url($targetPath);
         $tweet = Tweet::create([
             'user_id' => $this->data['user_id'],
-            'media_url' => $url
+            'media_url' => $url,
+            'mime_type' => $this->data['mime_type']
         ]);
     }
 }

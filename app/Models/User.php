@@ -6,10 +6,18 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Nicolaslopezj\Searchable\SearchableTrait;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, SearchableTrait;
+
+    protected $searchable = [
+        'columns' => [
+            'users.name' => 2,
+            'users.email' => 1
+        ]
+    ];
 
     /**
      * The attributes that are mass assignable.

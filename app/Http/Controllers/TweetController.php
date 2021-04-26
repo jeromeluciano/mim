@@ -31,6 +31,15 @@ class TweetController extends Controller
         return response()->json(200);
     }
 
+    public function destroy(Tweet $tweet) {
+        if (auth('web')->user()->tweets->contains($tweet)) {
+            $tweet->delete();
+            return response()->json(['status' => 'Deleted']);
+        } else {
+            return response()->json(['status' => 'failed to delete']);
+        }
+    }
+
     public function videoTweet(VideoTweetRequest $request)
     {
         $data = $request->only('media_streamable_url', 'mime_type');
@@ -46,10 +55,19 @@ class TweetController extends Controller
         return response()->json(compact('tweets'), 200);
     }
 
+    // public function getTweet(Request $request, Tweet $tweet) {
+    //     return response()->json(compact('tweet'), 200);
+    // }
+
     public function like(Request $request, Tweet $tweet)
     {
         $tweet->toggleLike();
         return response()->json($tweet, 200);
+    }
+
+    public function incrementViews(Tweet $tweet) {
+        $tweet->increment('views_count');
+        return response(200);
     }
 
 

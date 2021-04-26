@@ -2,6 +2,9 @@ export default {
   SET_STORIES (state, value) {
     state.stories = value
   },
+  DELETE_TWEET (state, target) {
+    state.stories = state.stories.filter(story => story.id != target.id)
+  },
   SET_TRENDINGS (state, value) {
     state.trendings = value
   },

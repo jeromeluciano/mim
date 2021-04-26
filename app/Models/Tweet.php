@@ -10,7 +10,7 @@ class Tweet extends Model
     use HasFactory;
 
     protected $guarded = [];
-
+    protected $with = ['user'];
     protected $appends = ['likesCount', 'liked'];
 
     public function user()

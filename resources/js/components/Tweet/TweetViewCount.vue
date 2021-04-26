@@ -25,7 +25,7 @@ export default {
   props: ['story'],
   computed: {
     storyViews () {
-      return abbreviate(this.story.views, 2)
+      return abbreviate(this.story.views_count, 2)
     }
   }
 };
