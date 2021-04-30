@@ -24,8 +24,8 @@ class TweetRequest extends FormRequest
     public function rules()
     {
         return [
-            'attachment' => 'mimes:mp4,jpg,jpeg,png,gif',
-            // 'caption' => ''
+            'media_url' => 'required',
+            'mime_type' => 'required'
         ];
     }
 }

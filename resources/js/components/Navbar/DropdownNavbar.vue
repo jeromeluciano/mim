@@ -3,6 +3,10 @@
       <div v-if="isBurgerOpen" class="lg:hidden md:hidden">
           <search-mobile> </search-mobile>
           <!-- Navigation Links -->
+          <div @click="gotoProfile"  class="cursor-pointer text-sm flex items-center bg-secondary mx-4 my-4 px-4 py-4 rounded-md text-gray-200 font-semibold" href="#">
+            <img class="mr-4 rounded-full w-8 h-8" :src="user.avatar_url" alt="">
+            <p>{{ user.name }}</p>
+          </div>
           <div @click="gotoHome"  class="cursor-pointer text-sm flex items-center bg-secondary mx-4 my-4 px-4 py-4 rounded-md text-gray-200 font-semibold" href="#">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
               <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
@@ -36,7 +40,8 @@ export default {
     ...mapGetters({
       isBurgerOpen: 'navbar/isBurgerOpen',
       isLoginModalOpen: 'auth/isLoginModalOpen',
-      authenticated: 'auth/authenticated'
+      authenticated: 'auth/authenticated',
+      user: 'auth/user'
     })
   },
   methods: {
@@ -52,6 +57,10 @@ export default {
       if(this.$router.name == 'home') return;
       this.$router.push({name: 'home'})
     },
+    gotoProfile () {
+      if(this.$router.name == 'profile') return;
+      this.$router.push({name: 'profile', params: { id: this.$route.params.id }})
+    }
   }
 }
 </script>

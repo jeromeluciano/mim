@@ -42,12 +42,16 @@ export default {
       liked: !target.liked,
       likesCount: target.liked ? --target.likesCount : ++target.likesCount
     }
-  console.log(copy)
+    console.log(copy)
     let index = state.stories.findIndex(story => story.id == target.id);
     
     state.stories.splice(index, 1, copy);
 
     axios.post(`/api/tweets/${target.id}/like`)
+  },
+
+  setLoginModalState ({ commit }, value) {
+    commit('SET_LOGIN_MODAL_STATE', value)
   },
   // async toggleTrendingLike({ commit, state }, target) {
   //   let copy = {

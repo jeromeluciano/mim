@@ -1,10 +1,10 @@
 <template>
   <!-- Media Container -->
   <div class="mb-4">
-    <router-link class="cursor-pointer" :to="{name: 'tweet', params: {id: story.id}}">
+    <div @click="gotoTweetView" class="focus:outline-none cursor-pointer">
       <img v-if="isImage" class="w-full object-fit max-h-64 h-auto rounded-lg" v-bind:src="story.media_url" alt="" />
       <video class="rounded-md z-25" controls v-if="isVideo" v-bind:src="story.media_streamable_url"></video>
-    </router-link>
+    </div>
     <tweet-footer :story="story"> </tweet-footer>
     
   </div>
@@ -31,6 +31,13 @@ export default {
     },
     isImage () {
       return this.story.mime_type.startsWith('image')
+    },
+    
+  },
+  methods: {
+    gotoTweetView () {
+      this.$router.push({name: 'tweet', params: { id: this.story.id }})
+      this.$router.go(this.$router.currentRoute)
     }
   }
   

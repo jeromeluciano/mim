@@ -25,24 +25,31 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 const abbr = require('number-abbreviate')
 export default {
   name: 'TweetReaction',
   props: ['story'],
   computed: {
+    ...mapGetters({
+      authenticated: 'auth/authenticated',
+    }),
     likesCount: function () {
       return abbr(this.story.likesCount, 2)
-    }
+    },
   },
   methods: {
     ...mapActions({
       toggleStoryLike: 'auth/toggleStoryLike',
-      toggleTrendingLike: 'auth/toggleTrendingLike'
+      toggleTrendingLike: 'auth/toggleTrendingLike',
+      setLoginModalState: 'auth/setLoginModalState'
     }),
 
     async toggleLike () {
-      console.log(this.$route)
+      if (!this.authenticated) {
+        this.setLoginModalState(true)
+        return
+      }
       if (this.$route.name == 'trendings') {
         return this.toggleTrendingLike(this.story);
       }

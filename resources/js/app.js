@@ -9,7 +9,7 @@ import VueToastr from 'vue-toastr'
 Vue.use(VueToastr)
 
 axios.defaults.withCredentials = true
-axios.defaults.baseURL = 'http://localhost:8000'
+axios.defaults.baseURL = process.env.APP_URL
 
 const files = require.context('./', true, /\.vue$/i)
 files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))

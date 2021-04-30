@@ -35,7 +35,11 @@ export default {
   },
 
   methods: {
-
+    resetData() {
+      this.form.name = ''
+      this.form.email = ''
+      this.form.password = ''
+    },
     register() {
       //  validate user info
       if (
@@ -52,6 +56,7 @@ export default {
           .then((response) => {
             // notification pop up
             console.log(response.data)
+            this.resetData()
            this.$toastr.s('Success', 'Registration Successful')
           })
           .catch((response) => {
@@ -61,9 +66,6 @@ export default {
           })
       }
     }
-  },
-  mounted() {
-    this.$toastr.s('Hello, world', 'Testing lang')
   }
 }
 </script>

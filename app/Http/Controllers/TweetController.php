@@ -49,6 +49,15 @@ class TweetController extends Controller
         return response()->json($tweet, 200);
     }
 
+    public function imageTweet(TweetRequest $request)
+    {
+        $data = $request->only('media_url', 'mime_type');
+        $data['user_id'] = auth('web')->id();
+
+        $tweet = Tweet::create($data);
+        return response()->json($tweet, 200);
+    }
+
     public function index()
     {
         $tweets = Tweet::with('user')->get()->reverse()->values();
@@ -75,5 +84,10 @@ class TweetController extends Controller
     public function getTweet(Tweet $tweet)
     {
         return response()->json($tweet, 200);
+    }
+
+    public function comments(Tweet $tweet)
+    {
+        return response()->json($tweet->comments, 200);
     }
 }

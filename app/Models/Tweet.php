@@ -73,4 +73,9 @@ class Tweet extends Model
         return $this->created_at->diffForHumans();
     }
 
+    public function comments()
+    {
+        return $this->hasMany(Comment::class)->orderBy('created_at', 'DESC');
+    }
+
 }

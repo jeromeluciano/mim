@@ -38,6 +38,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
+        'email',
         'password',
         'remember_token',
         'created_at',
@@ -59,6 +60,11 @@ class User extends Authenticatable
     public function tweets()
     {
         return $this->hasMany(Tweet::class);
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
     }
 
     public function getTweetsIdAttribute()
