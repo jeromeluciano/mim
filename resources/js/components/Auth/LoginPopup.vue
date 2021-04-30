@@ -22,11 +22,11 @@
             </span>
           </p>
           <!-- form -->
-          <input v-model="form.email" class="focus:outline-none focus:ring-2 w-full border border-gray-300 p-2 rounded" type="text" placeholder="Email address">
-          <input v-model="form.password" class="focus:outline-none focus:ring-2 w-full border border-gray-300 p-2 rounded" type="password" placeholder="Password">
-          <a class="block text-gray-500 text-xs mt-4 text-right" href="">Forgot password?</a>
-          <button @click="loginAttempt" class="focus:outline-none w-full bg-pink-600 text-white py-2 rounded">Sign in</button>
-          <button @click="gotoRegister" class="focus:outline-none block w-full text-center text-gray-500 mt-4" href="">Create account</button>
+          <input required v-model="form.email" class="focus:outline-none focus:ring-2 w-full border border-gray-300 p-2 rounded" type="text" placeholder="Email address">
+          <input required v-model="form.password" class="focus:outline-none focus:ring-2 w-full border border-gray-300 p-2 rounded" type="password" placeholder="Password">
+          <!-- <a class="block text-gray-500 text-xs mt-4 text-right" href="">Forgot password?</a> -->
+          <button @click="loginAttempt" class="hover:opacity-50 focus:outline-none w-full bg-pink-600 text-white py-2 rounded">Sign in</button>
+          <button @click="gotoRegister" class="hover:opacity-75 focus:outline-none block w-full text-center text-gray-500 mt-4" href="">Create account</button>
         </div>
       </div>
 
