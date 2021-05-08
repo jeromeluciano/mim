@@ -10,13 +10,15 @@
     </div>
 
     <div v-if="isUploadOpen" class="mx-auto mt-4 text-white">
-      <input @change="setAvatarInput" id="avatar" type="file">
+      <input id="avatar" type="file">
+      <button @click="setAvatarInput" class="bg-pink-600 text-white px-2 py-2 rounded-md">Upload avatar</button>
     </div>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
+import { mapActions } from 'vuex'
 export default {
   data () {
     return {
@@ -24,8 +26,15 @@ export default {
     }
   },
   methods: {
+    ...mapActions({
+      me: 'auth/me'
+    }),
+    async refetchUser() {
+      await this.me()
+    },
     toggleUpload () {
       this.isUploadOpen = !this.isUploadOpen
+      console.log('toggled')
     },
     setAvatarInput () {
       let avatar = document.querySelector('#avatar').files[0];
@@ -33,6 +42,10 @@ export default {
       formData.append('avatar', avatar);
 
       axios.post('/api/user/avatar', formData)
+        .then(response => {
+          this.$toastr.s('Avatar upload', 'Avatar upload successful')
+          this.refetchUser()
+        });
     }
   }
 }

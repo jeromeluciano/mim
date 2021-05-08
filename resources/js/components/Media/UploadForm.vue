@@ -193,7 +193,7 @@ export default {
       formData.append('media_streamable_url', data.url)
       console.log(this.mimeType, data.location)
       axios.post('/api/tweet-video', formData)
-        .then(response => console.log(response.data))
+        .then(response => this.$toastr.s('Upload success'))
     },
 
     async createImageTweet (data) {
@@ -201,7 +201,7 @@ export default {
       formData.append('mime_type', data.mimeType)
       formData.append('media_url', data.url)
       axios.post('/api/tweet-image', formData)
-        .then(response => console.log(response.data))
+        .then(response => this.$toastr.s('Upload success'))
     },
 
     resetData () {
